@@ -1,3 +1,4 @@
+import { useState } from "react";
 import reactImg from "./assets/react-core-concepts.png";
 import componentsImg from "./assets/components.png";
 import jsxImg from "./assets/jsx-ui.png";
@@ -5,6 +6,7 @@ import propsImg from "./assets/config.png";
 import stateImg from "./assets/state-mgmt.png";
 import Header from "./components/Header.jsx";
 import TabButton from "./components/TabButton.jsx";
+import { EXAMPLES } from "./data.js";
 
 function CoreConcept(props) {
   return (
@@ -17,6 +19,11 @@ function CoreConcept(props) {
 }
 
 function App() {
+  const [selectedTopic, setSelectedTopic] = useState("Components");
+  function handleSelect(selectedButton) {
+    // selectedButton => 'components', 'jsx', 'props', 'state'
+    setSelectedTopic(selectedButton);
+  }
   return (
     <div>
       <Header />
@@ -49,11 +56,20 @@ function App() {
         <section id="examples">
           <h2>Examples</h2>
           <menu>
-            <TabButton>Components</TabButton>
-            <TabButton>JSX</TabButton>
-            <TabButton>Props</TabButton>
-            <TabButton>State</TabButton>
+            <TabButton onSelect={() => handleSelect("Components")}>
+              Components
+            </TabButton>
+            <TabButton onSelect={() => handleSelect("Jsx")}>JSX</TabButton>
+            <TabButton onSelect={() => handleSelect("Props")}>Props</TabButton>
+            <TabButton onSelect={() => handleSelect("State")}>State</TabButton>
           </menu>
+          <div id="tab-content">
+            <h3>{EXAMPLES[selectedTopic].title}</h3>
+            <p>{EXAMPLES[selectedTopic].description}</p>
+            <pre>
+              <code>{EXAMPLES[selectedTopic].code}</code>
+            </pre>
+          </div>
         </section>
       </main>
       <main>
